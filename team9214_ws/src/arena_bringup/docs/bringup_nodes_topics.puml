@@ -2,6 +2,8 @@
 skinparam shadowing false
 skinparam packageStyle rectangle
 skinparam linetype ortho
+skinparam nodesep 90
+skinparam ranksep 90
 left to right direction
 
 title arena_bringup node/topic flow
@@ -21,9 +23,9 @@ package "bringup_single_cam.launch.py (defaults from config/bringup.yaml)" {
   component "ekf_map\n(robot_localization/ekf_node)" as sc_ekf
   component "rviz2" as sc_rviz
 
-  sc_usb_cam --> sc_rectify : /camera_1/image_raw\n/camera_1/camera_info
-  sc_rectify --> sc_apriltag : /camera_1/image_rect
-  sc_usb_cam --> sc_apriltag : /camera_1/camera_info
+  sc_usb_cam -down-> sc_rectify : /camera_1/image_raw\n/camera_1/camera_info
+  sc_rectify -up-> sc_apriltag : /camera_1/image_rect
+  sc_usb_cam -up-> sc_apriltag : /camera_1/camera_info
 
   sc_apriltag --> sc_observer : /camera_1/tag_detections
   sc_observer --> sc_ekf : /tag_global_pose
@@ -44,8 +46,8 @@ package "bringup_multi_cam.launch.py" {
   component "ekf_map\n(robot_localization/ekf_node)" as mc_ekf
   component "rviz2" as mc_rviz
 
-  mc_apriltag_1 --> mc_observer : /camera_1/tag_detections
-  mc_apriltag_2 --> mc_observer : /camera_2/tag_detections
+  mc_apriltag_1 -down-> mc_observer : /camera_1/tag_detections
+  mc_apriltag_2 -up-> mc_observer : /camera_2/tag_detections
   mc_observer --> mc_ekf : /tag_global_pose
 
   mc_rsp ..> mc_observer : /tf, /tf_static

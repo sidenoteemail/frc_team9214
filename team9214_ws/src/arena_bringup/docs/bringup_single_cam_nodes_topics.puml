@@ -2,6 +2,8 @@
 skinparam shadowing false
 skinparam packageStyle rectangle
 skinparam linetype ortho
+skinparam nodesep 90
+skinparam ranksep 90
 left to right direction
 
 title bringup_single_cam.launch.py node/topic flow
@@ -20,9 +22,9 @@ component "tag_pose_observer" as observer
 component "ekf_map\n(robot_localization/ekf_node)" as ekf
 component "rviz2" as rviz
 
-usb_cam --> rectify : /camera_1/image_raw\n/camera_1/camera_info
-rectify --> apriltag : /camera_1/image_rect
-usb_cam --> apriltag : /camera_1/camera_info
+usb_cam -down-> rectify : /camera_1/image_raw\n/camera_1/camera_info
+rectify -up-> apriltag : /camera_1/image_rect
+usb_cam -up-> apriltag : /camera_1/camera_info
 
 apriltag --> observer : /camera_1/tag_detections
 observer --> ekf : /tag_global_pose
