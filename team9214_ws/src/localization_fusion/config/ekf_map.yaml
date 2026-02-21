@@ -10,8 +10,9 @@ ekf_map:
     base_link_frame: base_link
     # Temporary test mode: publish odom -> base_link directly from this EKF.
     # Revert to `map` when running dual-filter/global localization architecture.
-    world_frame: odom
-
+    # world_frame: odom
+    world_frame: map
+    
     publish_tf: true
 
     # Example inputs (adjust for your system)
